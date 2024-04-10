@@ -1,0 +1,83 @@
+{
+  "name": "0xvm_optimized_evm_node",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "nodemon --ext \".ts,.js\" --watch \"./src\"  --exec \"ts-node  ./src/index.ts node",
+    "dev:rollup": "rollup -c --configPlugin typescript -w --watch.onEnd=\"node ./dist/index.mjs node -w auto\"",
+    "mocha": "mocha",
+    "test": "ts-node  ./src/index.ts test",
+    "benchmark:lmdb": "ts-node ./benchmark/lmdb.ts",
+    "benchmark:level": "ts-node ./benchmark/level.ts",
+    "benchmark:redis": "ts-node ./benchmark/redis.ts",
+    "build": "tsc",
+    "start:dev": "npm run build&& node --loader ts-node/esm build/src/index.js",
+    "help:dev": "npm run build&& node --loader ts-node/esm build/src/index.js help",
+    "dist": "cross-env NODE_ENV=production rollup -c --configPlugin typescript",
+    "start:dist": "npm run dist && node dist/index.cjs",
+    "pkg": "rimraf ./dist && npm run dist && pkg package.json  -C GZip"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "bin": "./dist/index.cjs",
+  "pkg": {
+    "scripts": "",
+    "assets": [
+      "./dist/*.node"
+    ],
+    "targets": [
+      "node18-win-x64",
+      "node18-linux-x64"
+    ],
+    "outputPath": "dist/binaries"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ethereumjs/vm": "^7.1.0",
+    "body-parser": "^1.20.2",
+    "console-craft": "^1.0.5",
+    "cors": "^2.8.5",
+    "ethers": "^6.9.0",
+    "execa": "^8.0.1",
+    "level": "^8.0.0",
+    "lmdb": "^2.9.1",
+    "memory-level": "^1.0.0",
+    "moment-timezone": "^0.5.43",
+    "node-fetch": "^3.3.2",
+    "redis": "^4.6.12",
+    "restana": "^4.9.6"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-json": "^6.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-replace": "^5.0.5",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/body-parser": "^1.19.2",
+    "@types/chai": "^4.3.8",
+    "@types/cors": "^2.8.13",
+    "@types/mocha": "^10.0.2",
+    "@types/node": "^20.8.7",
+    "@typescript-eslint/eslint-plugin": "^5.30.4",
+    "@typescript-eslint/parser": "^5.30.4",
+    "chai": "^4.3.10",
+    "copyfiles": "^2.4.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "mocha": "^10.2.0",
+    "nodemon": "^3.0.1",
+    "pkg": "^5.8.1",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^4.1.4",
+    "rollup-plugin-cleandir": "^2.0.0",
+    "rollup-plugin-version-injector": "^1.3.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.3"
+  }
+}
